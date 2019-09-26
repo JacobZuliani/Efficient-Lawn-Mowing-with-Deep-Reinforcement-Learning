@@ -1,4 +1,4 @@
-# Efficient-Lawn-Mowing-with-Deep-Reinforcement-Learning
+# Efficient Lawn Mowing with Deep Reinforcement Learning
 
 This is a client project done for Dassault Systèmes. The lawn mowing problem I present here is analogous to the problem faced by Dassault.
 
