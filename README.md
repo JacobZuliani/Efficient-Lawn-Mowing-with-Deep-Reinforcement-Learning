@@ -1,6 +1,6 @@
-# Efficient-Lawn-Mowing-with-Deep-Reinforcement-Learning
+# Efficient Lawn Mowing with Deep Reinforcement Learning
 
-This is a client project done for Dassault Systèmes. The lawn mowing problem I present here is analogous to the problem faced by Dassault.
+This is a client project done for Dassault Systèmes.
 
 Given any lawn shape and size how can we quickly discover the most efficient lawn mowing pattern? (assuming you're using a push mower)
 
