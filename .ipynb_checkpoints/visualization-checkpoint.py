@@ -1,7 +1,8 @@
 import numpy as np
 import copy
 import matplotlib.pyplot as plt
-from PIL import Image
+import cv2
+from PIL import Image, ImageDraw
 
 class visualize_environment():
     # given any number of environment states this class will record them and play them sequentially as a movie
@@ -18,23 +19,27 @@ class visualize_environment():
         self.tile_shape = (32, 32, 4) # shape of all tiles after conversion to np array
         self.environment_history = []
         
-    def display_new_environment_state(self, environment_state):
-        plt.figure(figsize=(20,20))
-        plt.imshow(self.__get_environment_state_image_array(environment_state))
-        plt.xticks([])
-        plt.yticks([])
-        plt.show()
+    def display_last_environment_state(self, ipynb = True):
+        # displays last environment state recived using cv2
         
+        cv2.imshow('test', cv2.cvtColor(self.environment_history[-1], cv2.COLOR_RGB2BGR))
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+            
     def recive_environment_state(self, environment_state):
         # records the environment state
         
         environment_state_image_array = self.__get_environment_state_image_array(environment_state)
         self.environment_history.append(environment_state_image_array)
     
-    def output_history(self):
+    def output_history(self, file_name, fps):
         # produces an mp4 file of the mower mowing the lawn over time.
         
-        return None
+        video_dims = (self.environment_history[0].shape[1], self.environment_history[0].shape[0])
+        video = cv2.VideoWriter(file_name, cv2.VideoWriter_fourcc(*'XVID'), fps, video_dims)
+        for img in self.environment_history:
+            video.write(cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
+        video.release()
         
     def __get_environment_state_image_array(self, environment_state):
         # returns image of the environment state as a 3d numpy array
