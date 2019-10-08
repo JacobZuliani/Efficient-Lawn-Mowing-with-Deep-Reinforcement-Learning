@@ -2,7 +2,7 @@
 Ways to make simulation more analogous to 3D printer tool path optimization:
     replace wood with pavement because the printer tip can be picked up and moved through any non-printable area
     make rule that mower cannot cross an already mowed path because the printer tip couldn't cross an already printed path
-    allow agent to pick starting position because the 3d printer would have the opportunity to do so
+    allow agent to pick starting position because the 3d printer would have the opportunity to do so (this will require a seperate agent only for this task?)
     Dr. Fields loss function suggestion? (mower has constant velocity and force in perpindicular direction determines 'effort' which is minimized, opposing force can turn mower)
     
 Fun ideas to try later:
