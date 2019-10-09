@@ -16,7 +16,9 @@ Here is an example environment state:
 
 Here is an example environment state after the agent made some progress:
 ![](https://i.ibb.co/cChrkMw/environment-state-with-progress-example.png)
-Sorry if github won't display the entire image, idk why, here's the link: https://i.ibb.co/cChrkMw/environment-state-with-progress-example.png
+
+Sorry if github won't display the entire image, idk why, here's the link:
+https://i.ibb.co/cChrkMw/environment-state-with-progress-example.png
 
 ### Loss Function:
 I have a push mower and when I'm mowing the lawn my goal is minimize the number of pivots (when I need to lift the front wheels and turn).
