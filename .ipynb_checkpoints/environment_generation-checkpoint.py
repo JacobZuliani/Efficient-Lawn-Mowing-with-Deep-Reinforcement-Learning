@@ -1,11 +1,17 @@
 import numpy as np
 
 # eventually I want to randomly generate environments in this file,
-# for now I'm going to focus on solving one environment, when that works well I will finish this file
+# for now I'm going to focus on solving easier environments, when that works well I will finish this file
 
-def get_environment_state():
-    # returns a basic environment to work on solving for now
-    
+def get_easy_environment_state():
+    # I preplaced a cut_grass tile where the agent starts (2,1), make sure the agent starts there when using this environment state!
+    # I'm going to try to solve this very simple environment first, then mode to the below one, then train on randomly generated ones
+    return np.array([
+    ['900','900','100','800','800','800','800'],
+    ['800','800','800','800','800','800','800'],
+    ['800','800','800','800','800','800','800']])
+
+def get_hard_environment_state():
     # I preplaced a cut_grass tile where the agent starts (8,8), make sure the agent starts there when using this environment state!
     return np.array([
     ['900','900','800','800','800','800','800','800','800','800','800','800','800','800','800','800','800','800','800', '800', '800', '800'],

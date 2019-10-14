@@ -52,7 +52,7 @@ class simulation():
         return self.current_environment_state, self.reward, self.environment.get_done_condition(self.current_environment_state)
     
 def show_environment_state(environment_state):
-    # shows any environment state inde
+    # displays provided environment_state
     
     visualization = visualize_environment()
     visualization.recive_environment_state(environment_state)
