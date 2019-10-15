@@ -20,21 +20,13 @@ class visualize_environment():
         self.exit = Image.open("textures/exit.png").convert("RGBA")               # default east
         self.tile_shape = (32, 32, 4) # shape of all tiles after conversion to np array
         self.environment_history = []
-        
+                
     def display_last_environment_state(self):
         # displays last environment state recived using matplotlib,
         # this used to use cv2 but I started using docker and I dont want to figure out how to display cv2 on my windows pc from a docker container
         
-        img = self.environment_history[-1]
-        # I want all environment visualizations to have the same area and retain the acpect ratio so I scale the figure size here to make area constant
-        img_x_dim = img.shape[1]
-        img_y_dim = img.shape[0]                              # how I determined scaling formula:
-        scale = np.sqrt(100/(img_x_dim * img_y_dim))          # (img_x_dim * scale) * (img_y_dim * scale) = target_img_area
-        scaled_x_dim = img_x_dim * scale                      # img_area * scale**2 = target_img_area
-        scaled_y_dim = img_y_dim * scale                      # scale * scale = target_img_area / img_area
-        # plot image                                          # scale = square_root(target_img_area / img_area)
-        plt.figure(figsize=(scaled_x_dim, scaled_y_dim))
-        plt.imshow(img)
+        fig = self.__get_empty_figure()
+        plt.imshow(self.environment_history[-1])
         plt.xticks([])
         plt.yticks([])
         plt.show()
@@ -49,34 +41,44 @@ class visualize_environment():
         environment_state_image_array = self.__get_environment_state_image_array(environment_state)
         self.environment_history.append(environment_state_image_array)
     
-    def output_history(self, file_name, interval):
+    def animate_history(self, file_name, interval):
         # produces an mp4 file of the mower mowing the lawn over time.
         # interval is the time between frames in milliseconds
         # I am aware this function is crazy slow, I don't care yet I'd rather focus on other things
 
-        fig, ax = plt.subplots()
-        #def init():
-        ax.set_xticks([])
-        ax.set_yticks([])
-        def update(environment_state_image_as_array):
-            ax.imshow(environment_state_image_as_array)
-
-        animation = FuncAnimation(fig, (lambda frame:  ax.imshow(frame)), frames=self.environment_history, interval=interval, blit=False)
+        fig = self.__get_empty_figure()
+        plt.xticks([])
+        plt.yticks([])
+        im = plt.imshow(self.environment_history[0])
+        
+        def animate(frame):
+            im.set_array(frame)
+            return [im]
+        
+        animation = FuncAnimation(fig, animate, frames=self.environment_history, interval=interval, blit=True)
         plt.close()
-
-        # save the animation as an mp4.  This requires ffmpeg or mencoder to be
-        # installed.  The extra_args ensure that the x264 codec is used, so that
-        # the video can be embedded in html5.  You may need to adjust this for
-        # your system: for more information, see
-        # http://matplotlib.sourceforge.net/api/animation_api.html
+        
         animation.save(file_name, extra_args=['-vcodec', 'libx264'])
         return animation
-    
-#         video_dims = (self.environment_history[0].shape[1], self.environment_history[0].shape[0])
+        
+
+#         video_dims = (self.environment_history[0].shape[1], self.environmnt_history[0].shape[0])
 #         video = cv2.VideoWriter(file_name, cv2.VideoWriter_fourcc(*'XVID'), fps, video_dims)
 #         for img in self.environment_history:
 #             video.write(cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
 #         video.release()
+
+    def __get_empty_figure(self):
+        # I want all environment visualizations to have the same area and retain the acpect ratio
+        # To do this I scale the figure size here to make area constant, then return the empty figure
+        
+        img = self.environment_history[-1]                    # how I determined scaling formula:
+        img_x_dim = img.shape[1]                              # (img_x_dim * scale) * (img_y_dim * scale) = target_img_area
+        img_y_dim = img.shape[0]                              # img_area * scale**2 = target_img_area          
+        scale = np.sqrt(100/(img_x_dim * img_y_dim))          # scale * scale = target_img_area / img_area
+        scaled_x_dim = img_x_dim * scale                      # scale = square_root(target_img_area / img_area)
+        scaled_y_dim = img_y_dim * scale                      
+        return plt.figure(figsize=(scaled_x_dim, scaled_y_dim))
         
     def __get_environment_state_image_array(self, environment_state):
         # returns image of the environment state as a 3d numpy array
