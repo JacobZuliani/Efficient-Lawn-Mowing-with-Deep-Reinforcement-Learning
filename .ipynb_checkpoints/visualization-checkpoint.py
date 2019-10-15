@@ -2,6 +2,8 @@ import numpy as np
 import copy
 import matplotlib.pyplot as plt
 import cv2
+from matplotlib.animation import FuncAnimation
+from IPython.display import HTML
 from PIL import Image, ImageDraw
 
 class visualize_environment():
@@ -47,72 +49,29 @@ class visualize_environment():
         environment_state_image_array = self.__get_environment_state_image_array(environment_state)
         self.environment_history.append(environment_state_image_array)
     
-    def output_history(self, file_name, fps):
+    def output_history(self, file_name, interval):
         # produces an mp4 file of the mower mowing the lawn over time.
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        # you were setting thi up to use matplotlib animate instead of opencv
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        from matplotlib import animation
+        # interval is the time between frames in milliseconds
+        # I am aware this function is crazy slow, I don't care yet I'd rather focus on other things
 
-        # First set up the figure, the axis, and the plot element we want to animate
-        img = self.environment_history[-1]
-        # I want all environment visualizations to have the same area and retain the acpect ratio so I scale the figure size here to make area constant
-        img_x_dim = img.shape[1]
-        img_y_dim = img.shape[0]                              # how I determined scaling formula:
-        scale = np.sqrt(100/(img_x_dim * img_y_dim))          # (img_x_dim * scale) * (img_y_dim * scale) = target_img_area
-        scaled_x_dim = img_x_dim * scale                      # img_area * scale**2 = target_img_area
-        scaled_y_dim = img_y_dim * scale                      # scale * scale = target_img_area / img_area
-        # plot image                                          # scale = square_root(target_img_area / img_area)
-        plt.figure(figsize=(scaled_x_dim, scaled_y_dim))
-        plt.imshow(img)
-        plt.xticks([])
-        plt.yticks([])
+        fig, ax = plt.subplots()
+        #def init():
+        ax.set_xticks([])
+        ax.set_yticks([])
+        def update(environment_state_image_as_array):
+            ax.imshow(environment_state_image_as_array)
 
-        # initialization function: plot the background of each frame
-        def init():
-            line.set_data([], [])
-            return line,
-
-        # animation function.  This is called sequentially
-        def animate(i):
-            x = np.linspace(0, 2, 1000)
-            y = np.sin(2 * np.pi * (x - 0.01 * i))
-            line.set_data(x, y)
-            return line,
-
-        # call the animator.  blit=True means only re-draw the parts that have changed.
-        anim = animation.FuncAnimation(fig, animate, init_func=init, frames=len(self.environment_history), interval=20, blit=True)
+        animation = FuncAnimation(fig, (lambda frame:  ax.imshow(frame)), frames=self.environment_history, interval=interval, blit=False)
+        plt.close()
 
         # save the animation as an mp4.  This requires ffmpeg or mencoder to be
         # installed.  The extra_args ensure that the x264 codec is used, so that
         # the video can be embedded in html5.  You may need to adjust this for
         # your system: for more information, see
         # http://matplotlib.sourceforge.net/api/animation_api.html
-        anim.save('basic_animation.mp4', fps=fps, extra_args=['-vcodec', 'libx264'])
-
-        plt.show()
-        
-        
+        animation.save(file_name, extra_args=['-vcodec', 'libx264'])
+        return animation
+    
 #         video_dims = (self.environment_history[0].shape[1], self.environment_history[0].shape[0])
 #         video = cv2.VideoWriter(file_name, cv2.VideoWriter_fourcc(*'XVID'), fps, video_dims)
 #         for img in self.environment_history:

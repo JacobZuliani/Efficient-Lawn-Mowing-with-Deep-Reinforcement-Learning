@@ -21,10 +21,10 @@ class simulation():
         
         return self.environment.get_action_space()
     
-    def get_simulation_history_visualization(self, file_name, fps):
+    def get_simulation_history_visualization(self, file_name, interval):
         # outputs an mp4 file of the agent mowing the lawn
         
-        self.visualization.output_history(file_name, fps)
+        return self.visualization.animate_history(file_name, interval)
         
     def display_last_env_state(self):
         # displays the last environment state of the simulation
