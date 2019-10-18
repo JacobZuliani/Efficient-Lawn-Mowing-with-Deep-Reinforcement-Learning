@@ -8,6 +8,7 @@ Given any lawn shape and size how can we quickly discover the most efficient law
 
 To make the project as reproducible as possible I published the environment and code as a docker image available at the below link.
 There are intructions in the docker hub repo on how to build the image.
+
 https://hub.docker.com/r/jzuliani/lawn-mowing
 
 ### Environment:
