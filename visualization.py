@@ -1,7 +1,6 @@
 import numpy as np
 import copy
 import matplotlib.pyplot as plt
-import cv2
 from matplotlib.animation import FuncAnimation
 from IPython.display import HTML
 from PIL import Image, ImageDraw

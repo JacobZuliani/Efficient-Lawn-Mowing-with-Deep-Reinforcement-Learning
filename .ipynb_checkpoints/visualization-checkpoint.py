@@ -1,7 +1,6 @@
 import numpy as np
 import copy
 import matplotlib.pyplot as plt
-import cv2
 from matplotlib.animation import FuncAnimation
 from IPython.display import HTML
 from PIL import Image, ImageDraw
@@ -55,7 +54,7 @@ class visualize_environment():
             im.set_array(frame)
             return [im]
         
-        animation = FuncAnimation(fig, animate, frames=self.environment_history, interval=interval, blit=True)
+        animation = FuncAnimation(fig, animate, frames=self.environment_history[1:], interval=interval, blit=True)
         plt.close()
         
         animation.save(file_name, extra_args=['-vcodec', 'libx264'])
