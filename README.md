@@ -4,6 +4,13 @@ This is a client project done for Dassault Systèmes. Lawn mowing is analogous t
 
 Given any lawn shape and size how can we quickly discover the most efficient lawn mowing pattern? (assuming you're using a push mower)
 
+### Reproducing with Docker:
+
+To make the project as reproducible as possible I published the environment and code as a docker image available at the below link.
+There are intructions in the docker hub repo on how to build the image.
+
+https://hub.docker.com/r/jzuliani/lawn-mowing
+
 ### Environment:
 The environment is the lawn.
 A state of this environment consists of a matrix of three character strings
@@ -27,6 +34,8 @@ Loss is equalivent to the number of moves taken by the agent, the simulation end
 If the agent pivots it costs 1 move and does not mow any lawn because the agents location doesn't change.
 This causes the agent to find a way to mow the lawn with as few pivots as possible.
 
+Ideally I would find a good way to quantify the energy required to move the mower, then use that as loss. I'll work more on this once I get it working well with a very simple loss function.
+
 ### Agent:
 The agent is the lawnmower.
 At every timestep the lawn mower can choose one of the following actions:
@@ -39,3 +48,7 @@ If the agent takes an illegal action (ex. trying to mow into a wood tile) then t
 The agent has the following attributes:
     position (x,y location on the lawn)
     direction (n,s,e,w the direction the mower is facing)
+    
+When I end up restructuring the way loss works this will all change.
+
+
