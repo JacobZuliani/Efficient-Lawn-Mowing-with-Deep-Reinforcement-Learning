@@ -1,0 +1,2 @@
+model_checkpoint_path: "C:\\Users\\Jake\\Documents\\DataScience\\school\\Efficient-Lawn-Mowing-with-Deep-Reinforcement-Learning\\experiments\\lawnmowing\\checkpoints\\model"
+all_model_checkpoint_paths: "C:\\Users\\Jake\\Documents\\DataScience\\school\\Efficient-Lawn-Mowing-with-Deep-Reinforcement-Learning\\experiments\\lawnmowing\\checkpoints\\model"

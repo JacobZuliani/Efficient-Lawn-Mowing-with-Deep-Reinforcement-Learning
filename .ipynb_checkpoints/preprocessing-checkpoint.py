@@ -10,7 +10,7 @@ import numpy as np
 
 def one_hot_encode_tile(tile): # given single tile returns one hot encoding
     
-    if (tile[0][1] != 0) and (tile[0][2] == 0): # if agent
+    if (tile[0][1] != '0') and (tile[0][2] == '0'): # if agent
         return np.array([0, 0, 0, 0, 1])
     if tile[0][0] == '1': # if cut_grass
         return np.array([1, 0, 0, 0, 0])

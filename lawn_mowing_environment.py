@@ -150,4 +150,4 @@ class environment():
     
     def get_reward(self):
         # return agents current reward
-        return self.moves
+        return -self.moves
