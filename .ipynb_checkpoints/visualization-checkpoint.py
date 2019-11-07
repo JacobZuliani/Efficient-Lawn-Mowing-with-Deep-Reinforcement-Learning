@@ -72,9 +72,11 @@ class visualize_environment():
         # To do this I scale the figure size here to make area constant, then return the empty figure
         
         img = self.environment_history[-1]                    # how I determined scaling formula:
+        print(img.shape)
         img_x_dim = img.shape[1]                              # (img_x_dim * scale) * (img_y_dim * scale) = target_img_area
-        img_y_dim = img.shape[0]                              # img_area * scale**2 = target_img_area          
+        img_y_dim = img.shape[0]                              # img_area * scale**2 = target_img_area      
         scale = np.sqrt(100/(img_x_dim * img_y_dim))          # scale * scale = target_img_area / img_area
+        print(scale)
         scaled_x_dim = img_x_dim * scale                      # scale = square_root(target_img_area / img_area)
         scaled_y_dim = img_y_dim * scale                      
         return plt.figure(figsize=(scaled_x_dim, scaled_y_dim))
